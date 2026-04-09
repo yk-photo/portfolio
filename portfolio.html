@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ポートフォリオ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet" />
+
+  <!-- ============================================================
+       🌿 設定ゾーン — ここだけ書き換えればOK！
+       ============================================================
+       下の <script> の中身を自分の情報に書き換えてください。
+       ダブルクォート " " の中身だけを変えてください。
+       ============================================================ -->
+  <script id="config">
+    const CONFIG = {
+
+      /* ── 基本情報 ── */
+      name:       "YK Photo",                // ← あなたの名前
+      tagline:    "出張カメラマン",           // ← キャッチコピー（短め）
+      subTagline: "あなたの大切な瞬間を、ずっと残る一枚に。", // ← サブキャッチ
+
+      /* ── プロフィール写真 ── */
+      // 自分の写真ファイルのパスを入れてください（例: "photos/profile.jpg"）
+      // ポートフォリオ.htmlと同じフォルダに写真を置いて、ファイル名だけ書けばOKです
+      profilePhoto: "",  // ← ここに写真ファイルのパスを入れてください
+
+      /* ── 自己紹介 ── */
+      about: [
+        "ホームページをご覧いただきありがとうございます。出張フォトグラファーのゆっけです。",
+        "埼玉・東京を中心に、家族写真やポートレートの出張撮影をしています。",
+        "普段は建築士として働きながら、資格学校で講師もしています。建築も写真も共通しているのは、「人の人生に長く残るものをつくる仕事」だと思っています。",
+        "家族の時間や子どもの成長は、あとから振り返ると本当に宝物になります。公園で遊ぶ何気ない日常風景や成長の節目になるハレの日（お宮参り・お食い初め・七五三等）を写真で切り取って、一生の思い出を作るお手伝いをさせていただきます。",
+        "撮影では、ポーズをたくさん指示するというよりも、コミュニケーションを大切にして自然な会話や遊びの中で、その人らしい表情を引き出すことを大切にしています。写真が苦手な方でも、リラックスして撮影できる雰囲気づくりを心がけています。",
+        "私自身も2児の父なので、お子さまの撮影も安心してお任せください。",
+        "未来の家族がいつか思い出を振り返ったときに、「この写真を残しておいてよかった」と思える、そんな一枚をお届けできたら嬉しいです。"
+      ], // ← 自己紹介文。行を増やしたい場合は "文章", を追加してください
+
+      /* ── ギャラリー（写真） ── */
+      // src: に写真ファイルのパスを入れてください（例: "photos/photo1.jpg"）
+      // caption: に写真の説明を入れてください
+      gallery: [
+        { src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80", caption: "家族フォト" },
+        { src: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80", caption: "七五三" },
+        { src: "https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=80", caption: "誕生日" },
+        { src: "https://images.unsplash.com/photo-1476703993599-0035a21b089a?w=600&q=80", caption: "お宮参り" },
+        { src: "https://images.unsplash.com/photo-1544126592-807ade215a0b?w=600&q=80", caption: "お食い初め" },
+        { src: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&q=80", caption: "カップルフォト" },
+        { src: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80", caption: "プロフィール撮影" },
+      ],
+
+      /* ── 料金プラン ── */
+      plans: [
+        {
+          name: "ライトプラン",
+          price: "¥15,000",
+          duration: "撮影60分",
+          includes: ["データ納品 30枚〜", "撮影場所1箇所", "納品まで2週間"],
+        },
+        {
+          name: "スタンダードプラン",
+          price: "¥25,000",
+          duration: "撮影90分",
+          includes: ["データ納品 60枚〜", "撮影場所2箇所まで", "納品まで2週間", "衣装チェンジ1回OK"],
+          recommended: true, // ← おすすめプランにしたい場合は true のまま
+        },
+      ],
+
+      /* ── Googleカレンダー連携 ── */
+      // ★ 下のURLを設定するだけで、カレンダーが自動反映されます！
+      // 【取得手順】
+      //   1. Googleカレンダーを開く
+      //   2. 左側のカレンダー名の「︙」→「設定と共有」をクリック
+      //   3. 「カレンダーの共有設定」→「一般公開して誰でも利用できるようにする」にチェック
+      //   4. 少し下にスクロール→「カレンダーを埋め込む」→「コードをコピー」
+      //   5. コピーしたコードの中の src="ここのURL" だけを下に貼り付けてください
+      googleCalendarUrl: "https://calendar.google.com/calendar/embed?src=bdf99f532b8975d79ca325d8378bcc17018d0a040ec80e33df64db223fd09b36%40group.calendar.google.com&ctz=Asia%2FTokyo",
+
+      /* ── お問い合わせ ── */
+      // メールアドレスを入れると、フォーム送信時に自動でメールが開きます
+      contactEmail: "yuukiendo0824@gmail.com",
+
+      /* ── SNS リンク（不要なものは "" にしてください） ── */
+      sns: {
+        instagram: "https://www.instagram.com/yukke9029/",  // ← InstagramのURLを入れてください
+        twitter:   "",
+        line:      "https://lin.ee/ibu11PL",  // LINE公式アカウントのURL
+      },
+    };
+  </script>
+
+  <style>
+    /* ── リセット & 基本設定 ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream:  #f7f4ef;
+      --beige:  #eae6da;
+      --sand:   #c8d5c4;
+      --brown:  #6b8f71;
+      --dark:   #2d4a38;
+      --accent: #5a8f65;
+      --text:   #3a4f3d;
+      --warm:   #8b6f5e;
+      --font-serif: 'Noto Serif JP', serif;
+      --font-sans:  'Noto Sans JP', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.8;
+    }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── ナビゲーション ── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,247,242,0.92);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--sand);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      height: 60px;
+    }
+    #nav .logo {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      color: var(--dark);
+      letter-spacing: .1em;
+    }
+    #nav ul {
+      display: flex; list-style: none; gap: 2rem;
+    }
+    #nav ul a {
+      font-size: .85rem;
+      letter-spacing: .08em;
+      color: var(--brown);
+      transition: color .2s;
+    }
+    #nav ul a:hover { color: var(--dark); }
+
+    /* ── ヒーロー ── */
+    #hero {
+      margin-top: 60px;
+      min-height: calc(100vh - 60px);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    /* スライドショー背景 */
+    #hero-slides {
+      position: absolute; inset: 0; z-index: 0;
+    }
+    #hero-slides .slide {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
+    }
+    #hero-slides .slide.active { opacity: 1; }
+    /* 写真の上に温かみのあるオーバーレイ */
+    #hero-slides::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(45,74,56,.45) 0%, rgba(30,51,40,.55) 100%);
+      z-index: 1;
+    }
+    #hero .hero-inner {
+      max-width: 640px;
+      position: relative;
+      z-index: 2;
+    }
+    #hero .hero-tag {
+      display: inline-block;
+      font-size: .8rem;
+      letter-spacing: .2em;
+      color: rgba(255,255,255,.9);
+      border: 1px solid rgba(255,255,255,.5);
+      border-radius: 99px;
+      padding: .3rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+    #hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      color: #fff;
+      font-weight: 300;
+      letter-spacing: .1em;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 16px rgba(0,0,0,.25);
+    }
+    #hero p {
+      font-size: 1rem;
+      color: rgba(255,255,255,.88);
+      margin-bottom: 2.5rem;
+      letter-spacing: .05em;
+      text-shadow: 0 1px 8px rgba(0,0,0,.2);
+    }
+    #hero .cta {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: .85rem 2.5rem;
+      border-radius: 99px;
+      font-size: .9rem;
+      letter-spacing: .1em;
+      transition: background .2s, transform .2s;
+      box-shadow: 0 4px 16px rgba(90,143,101,.25);
+    }
+    #hero .cta:hover { background: var(--dark); transform: translateY(-2px); }
+
+    /* ── セクション共通 ── */
+    section { padding: 6rem 2rem; }
+    section:nth-child(even) { background: #edf0e9; }
+    .section-inner { max-width: 1000px; margin: 0 auto; }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 300;
+      color: var(--dark);
+      letter-spacing: .1em;
+      text-align: center;
+      margin-bottom: .6rem;
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--brown);
+      font-size: .85rem;
+      letter-spacing: .1em;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ── About ── */
+    .about-layout {
+      display: flex;
+      gap: 3rem;
+      align-items: flex-start;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .about-photo-wrap {
+      flex-shrink: 0;
+      width: 220px;
+    }
+    .about-photo-wrap img {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--sand);
+      box-shadow: 0 4px 20px rgba(45,74,56,.15);
+    }
+    .about-photo-placeholder {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: var(--beige);
+      border: 3px dashed var(--sand);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      color: var(--brown);
+      font-size: .8rem;
+      letter-spacing: .05em;
+      text-align: center;
+      line-height: 1.6;
+    }
+    .about-photo-placeholder svg { opacity: .5; }
+    .about-text p {
+      margin-bottom: .9rem;
+      color: var(--text);
+      font-size: .97rem;
+      line-height: 1.9;
+    }
+    @media (max-width: 700px) {
+      .about-layout { flex-direction: column; align-items: center; }
+      .about-text p { text-align: center; }
+    }
+
+    /* ── Gallery ── */
+    #gallery .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 200px;
+      gap: 10px;
+    }
+    /* 大きさのバリエーション（1枚目・4枚目を大きく） */
+    #gallery .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+    #gallery .gallery-item:nth-child(4) { grid-column: span 2; }
+    #gallery .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 6px;
+    }
+    #gallery .gallery-item img { transition: transform .5s ease; }
+    #gallery .gallery-item:hover img { transform: scale(1.05); }
+    #gallery .gallery-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(45,74,56,.7));
+      color: #fff;
+      font-size: .8rem;
+      letter-spacing: .1em;
+      padding: .8rem 1rem;
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    #gallery .gallery-item:hover .gallery-caption { opacity: 1; }
+    @media (max-width: 640px) {
+      #gallery .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 150px;
+      }
+      #gallery .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+      #gallery .gallery-item:nth-child(4) { grid-column: span 1; }
+    }
+
+    /* ── Instagram ── */
+    #instagram-section { background: var(--cream); }
+    .ig-embed-wrap {
+      display: flex;
+      justify-content: center;
+    }
+    .ig-card {
+      background: #fff;
+      border: 1px solid var(--sand);
+      border-radius: 16px;
+      padding: 2.8rem 3rem;
+      text-align: center;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .ig-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,.1); }
+    .ig-icon { margin-bottom: 1rem; }
+    .ig-handle {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      color: var(--dark);
+      letter-spacing: .05em;
+      margin-bottom: .8rem;
+    }
+    .ig-desc {
+      font-size: .88rem;
+      color: var(--warm);
+      line-height: 1.8;
+      margin-bottom: 1.8rem;
+    }
+    .ig-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #f9ce34, #ee2a7b 50%, #6228d7);
+      color: #fff;
+      padding: .8rem 2.2rem;
+      border-radius: 99px;
+      font-size: .9rem;
+      letter-spacing: .1em;
+      transition: opacity .2s, transform .2s;
+      box-shadow: 0 4px 16px rgba(238,42,123,.25);
+    }
+    .ig-btn:hover { opacity: .9; transform: translateY(-2px); }
+
+    /* ── Plans ── */
+    #plans .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .plan-card {
+      background: var(--cream);
+      border: 1px solid var(--sand);
+      border-radius: 8px;
+      padding: 2rem;
+      position: relative;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .plan-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(139,111,94,.15); }
+    .plan-card.recommended {
+      border-color: var(--accent);
+      background: #f2f7f3;
+    }
+    .plan-card .rec-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      font-size: .72rem;
+      letter-spacing: .1em;
+      padding: .2rem .9rem;
+      border-radius: 99px;
+    }
+    .plan-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      color: var(--dark);
+      margin-bottom: .3rem;
+    }
+    .plan-card .price {
+      font-size: 1.9rem;
+      font-weight: 600;
+      color: var(--brown);
+      margin-bottom: .2rem;
+    }
+    .plan-card .duration {
+      font-size: .8rem;
+      color: var(--brown);
+      margin-bottom: 1.2rem;
+      opacity: .8;
+    }
+    .plan-card ul { list-style: none; }
+    .plan-card ul li {
+      font-size: .88rem;
+      padding: .3rem 0;
+      border-bottom: 1px dotted var(--sand);
+      color: var(--text);
+    }
+    .plan-card ul li::before { content: "✓ "; color: var(--accent); }
+    .plan-card .price { color: var(--dark); }
+
+    /* ── Schedule ── */
+    #calendar-wrap {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(45,74,56,.12);
+    }
+    #calendar-wrap iframe {
+      display: block;
+      width: 100%;
+      height: 620px;
+      border: none;
+    }
+    .calendar-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      padding: 4rem 2rem;
+      background: #fff;
+      border: 2px dashed var(--sand);
+      border-radius: 12px;
+      text-align: center;
+      color: var(--brown);
+    }
+    .calendar-placeholder svg { opacity: .35; }
+    .calendar-placeholder p { font-size: .9rem; line-height: 2; }
+    .calendar-placeholder code {
+      background: var(--beige);
+      padding: .15rem .55rem;
+      border-radius: 4px;
+      font-size: .82rem;
+      color: var(--dark);
+      font-family: monospace;
+    }
+    @media (max-width: 640px) {
+      #calendar-wrap iframe { height: 460px; }
+    }
+
+    /* ── Contact ── */
+    #contact form {
+      max-width: 560px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    #contact label { font-size: .85rem; color: var(--brown); letter-spacing: .05em; }
+    .line-contact-wrap { display: flex; justify-content: center; }
+    .line-card {
+      background: #fff;
+      border: 1px solid #c8e6c9;
+      border-radius: 16px;
+      padding: 2.8rem 3rem;
+      text-align: center;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 4px 24px rgba(6,199,85,.1);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .line-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(6,199,85,.15); }
+    .line-icon { margin-bottom: 1.2rem; }
+    .line-lead {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      color: var(--dark);
+      margin-bottom: 1.2rem;
+    }
+    .line-hints {
+      list-style: none;
+      text-align: left;
+      display: inline-block;
+      margin-bottom: 2rem;
+    }
+    .line-hints li {
+      font-size: .88rem;
+      color: var(--text);
+      padding: .25rem 0;
+    }
+    .line-hints li::before { content: "✓ "; color: #06C755; font-weight: 600; }
+    .line-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #06C755;
+      color: #fff;
+      padding: .9rem 2.4rem;
+      border-radius: 99px;
+      font-size: .95rem;
+      letter-spacing: .08em;
+      font-weight: 600;
+      transition: background .2s, transform .2s;
+      box-shadow: 0 4px 16px rgba(6,199,85,.3);
+      margin-bottom: 1rem;
+    }
+    .line-btn:hover { background: #05a648; transform: translateY(-2px); }
+    .line-note {
+      font-size: .75rem;
+      color: var(--brown);
+      opacity: .8;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: #1e3328;
+      color: rgba(255,255,255,.6);
+      text-align: center;
+      padding: 2.5rem 1rem;
+      font-size: .82rem;
+      letter-spacing: .06em;
+    }
+    footer .sns-links {
+      display: flex; justify-content: center; gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    footer .sns-links a {
+      color: rgba(255,255,255,.7);
+      font-size: .85rem;
+      letter-spacing: .08em;
+      transition: color .2s;
+    }
+    footer .sns-links a:hover { color: #fff; }
+
+    /* ── レスポンシブ ── */
+    @media (max-width: 640px) {
+      #nav ul { gap: 1rem; }
+      #nav ul a { font-size: .75rem; }
+      #schedule table { font-size: .82rem; }
+      #schedule th, #schedule td { padding: .5rem .6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ナビゲーション -->
+<nav id="nav">
+  <div class="logo" id="nav-logo"></div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#plans">料金</a></li>
+    <li><a href="#schedule">空き状況</a></li>
+    <li><a href="#contact">お問い合わせ</a></li>
+  </ul>
+</nav>
+
+<!-- ヒーロー -->
+<section id="hero">
+  <div id="hero-slides"></div>
+  <div class="hero-inner">
+    <div class="hero-tag" id="hero-tagline"></div>
+    <h1 id="hero-name"></h1>
+    <p id="hero-sub"></p>
+    <a href="#contact" class="cta">撮影を予約する</a>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="section-inner">
+    <h2 class="section-title">About</h2>
+    <p class="section-sub">— カメラマンについて —</p>
+    <div class="about-layout">
+      <div class="about-photo-wrap" id="about-photo-wrap">
+        <!-- プロフィール写真 or プレースホルダー -->
+      </div>
+      <div class="about-text" id="about-text"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section id="gallery">
+  <div class="section-inner">
+    <h2 class="section-title">Gallery</h2>
+    <p class="section-sub">— 撮影実績 —</p>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+</section>
+
+<!-- Instagram -->
+<section id="instagram-section">
+  <div class="section-inner">
+    <h2 class="section-title">Instagram</h2>
+    <p class="section-sub">— 撮影の最新情報はこちら —</p>
+    <div class="ig-embed-wrap">
+      <div class="ig-card">
+        <div class="ig-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+            <rect width="24" height="24" rx="7" fill="url(#ig-grad)"/>
+            <circle cx="12" cy="12" r="4.2" stroke="white" stroke-width="1.8" fill="none"/>
+            <circle cx="17" cy="7" r="1.1" fill="white"/>
+            <defs>
+              <linearGradient id="ig-grad" x1="0" y1="24" x2="24" y2="0" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#f9ce34"/><stop offset="0.35" stop-color="#ee2a7b"/><stop offset="1" stop-color="#6228d7"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <p class="ig-handle">@yukke9029</p>
+        <p class="ig-desc">過去作品を多数掲載しています。<br>ぜひInstagramもチェックしてみてください。</p>
+        <a href="https://www.instagram.com/yukke9029/" target="_blank" class="ig-btn">Instagramを見る</a>
+      </div>
+      <!-- 公式Instagramの投稿を埋め込む場合はここにコードを貼り付けてください -->
+      <!-- 埋め込みコードはInstagramの投稿右上「…」→「埋め込む」で取得できます -->
+    </div>
+  </div>
+</section>
+
+<!-- Plans -->
+<section id="plans">
+  <div class="section-inner">
+    <h2 class="section-title">Plans</h2>
+    <p class="section-sub">— 料金プラン —</p>
+    <div class="plans-grid" id="plans-grid"></div>
+  </div>
+</section>
+
+<!-- Schedule -->
+<section id="schedule">
+  <div class="section-inner">
+    <h2 class="section-title">Schedule</h2>
+    <p class="section-sub">— 撮影可能日 —</p>
+    <div id="calendar-wrap"></div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="section-inner">
+    <h2 class="section-title">Contact</h2>
+    <p class="section-sub">— お問い合わせ —</p>
+    <div class="line-contact-wrap">
+      <div class="line-card">
+        <div class="line-icon">
+          <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" width="56" height="56">
+            <rect width="40" height="40" rx="10" fill="#06C755"/>
+            <path d="M33 18.6c0-5.8-5.8-10.6-13-10.6S7 12.8 7 18.6c0 5.2 4.6 9.6 10.9 10.4.4.1 1 .3 1.1.7.1.4 0 .9 0 .9l-.2 1.1c-.1.4-.3 1.6 1.4.9 1.7-.7 9.1-5.4 12.5-9.2C33 21.7 33 20.2 33 18.6z" fill="white"/>
+            <path d="M17.3 15.8h-1.1a.3.3 0 0 0-.3.3v6.8c0 .2.1.3.3.3h1.1c.2 0 .3-.1.3-.3v-6.8c0-.2-.1-.3-.3-.3zM24.9 15.8h-1.1a.3.3 0 0 0-.3.3v4l-3.1-4.1a.3.3 0 0 0-.3-.2h-1.1a.3.3 0 0 0-.3.3v6.8c0 .2.1.3.3.3H20c.2 0 .3-.1.3-.3v-4l3.1 4.2c0 .1.1.1.2.1h1.3c.2 0 .3-.1.3-.3v-6.8c0-.2-.1-.3-.3-.3zM14.3 21.5h-3v-5.4a.3.3 0 0 0-.3-.3h-1.1a.3.3 0 0 0-.3.3v6.8c0 .2.1.3.3.3h4.4c.2 0 .3-.1.3-.3V21.8c0-.2-.1-.3-.3-.3zM30.4 17.5c.2 0 .3-.1.3-.3v-1.1a.3.3 0 0 0-.3-.3H26c-.2 0-.3.1-.3.3v6.8c0 .2.1.3.3.3h4.4c.2 0 .3-.1.3-.3v-1.1a.3.3 0 0 0-.3-.3h-3v-1.1h3c.2 0 .3-.1.3-.3v-1.1a.3.3 0 0 0-.3-.3h-3v-1.1h3z" fill="#06C755"/>
+          </svg>
+        </div>
+        <p class="line-lead">お気軽にLINEからご連絡ください</p>
+        <ul class="line-hints">
+          <li>撮影についてのご質問</li>
+          <li>撮影日程のご相談・仮予約</li>
+          <li>料金・プランのご確認</li>
+        </ul>
+        <a href="https://lin.ee/ibu11PL" target="_blank" class="line-btn">
+          <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" width="18" height="18" style="margin-right:.5rem;vertical-align:middle">
+            <circle cx="10" cy="10" r="10" fill="white" opacity=".25"/>
+            <path d="M16.5 9.3c0-2.9-2.9-5.3-6.5-5.3S3.5 6.4 3.5 9.3c0 2.6 2.3 4.8 5.45 5.2.2.05.5.15.55.35.05.2 0 .45 0 .45l-.1.55c-.05.2-.15.8.7.45.85-.35 4.55-2.7 6.25-4.6.75-.85.9-1.65.9-2.45z" fill="white"/>
+          </svg>
+          LINEで問い合わせる
+        </a>
+        <p class="line-note">※ボタンを押すとLINE公式アカウントのトーク画面が開きます</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="sns-links" id="sns-links"></div>
+  <p id="footer-copy"></p>
+</footer>
+
+<!-- ページを動かすスクリプト -->
+<script>
+  // 設定ゾーンの CONFIG を読み込んでページを組み立てる
+  (function () {
+    // ナビロゴ
+    document.getElementById('nav-logo').textContent = CONFIG.name;
+
+    // ヒーロー
+    document.getElementById('hero-tagline').textContent = CONFIG.tagline;
+    document.getElementById('hero-name').textContent    = CONFIG.name;
+    document.getElementById('hero-sub').textContent     = CONFIG.subTagline;
+
+    // About プロフィール写真
+    const photoWrap = document.getElementById('about-photo-wrap');
+    if (CONFIG.profilePhoto) {
+      photoWrap.innerHTML = `<img src="${CONFIG.profilePhoto}" alt="プロフィール写真" />`;
+    } else {
+      photoWrap.innerHTML = `
+        <div class="about-photo-placeholder">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+          ここに写真が<br>表示されます
+        </div>`;
+    }
+
+    // About テキスト
+    const aboutEl = document.getElementById('about-text');
+    CONFIG.about.forEach(p => {
+      const el = document.createElement('p');
+      el.textContent = p;
+      aboutEl.appendChild(el);
+    });
+
+    // ヒーロー スライドショー（ギャラリー画像を背景に使う）
+    const slidesEl = document.getElementById('hero-slides');
+    CONFIG.gallery.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'slide' + (i === 0 ? ' active' : '');
+      div.style.backgroundImage = `url('${item.src}')`;
+      slidesEl.appendChild(div);
+    });
+    (function () {
+      const slides = slidesEl.querySelectorAll('.slide');
+      let current = 0;
+      setInterval(() => {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+      }, 4000); // 4秒ごとに切り替え（変えたい場合はこの数値を変更）
+    })();
+
+    // Gallery
+    const galleryEl = document.getElementById('gallery-grid');
+    CONFIG.gallery.forEach(item => {
+      galleryEl.innerHTML += `
+        <div class="gallery-item">
+          <img src="${item.src}" alt="${item.caption}" loading="lazy" />
+          <div class="gallery-caption">${item.caption}</div>
+        </div>`;
+    });
+
+    // Plans
+    const plansEl = document.getElementById('plans-grid');
+    CONFIG.plans.forEach(plan => {
+      const rec = plan.recommended ? 'recommended' : '';
+      const badge = plan.recommended ? '<span class="rec-badge">おすすめ</span>' : '';
+      const items = plan.includes.map(i => `<li>${i}</li>`).join('');
+      plansEl.innerHTML += `
+        <div class="plan-card ${rec}">
+          ${badge}
+          <h3>${plan.name}</h3>
+          <div class="price">${plan.price}</div>
+          <div class="duration">${plan.duration}</div>
+          <ul>${items}</ul>
+        </div>`;
+    });
+
+    // Schedule — Googleカレンダー埋め込み
+    const calWrap = document.getElementById('calendar-wrap');
+    if (CONFIG.googleCalendarUrl) {
+      const sep = CONFIG.googleCalendarUrl.includes('?') ? '&' : '?';
+      const src = CONFIG.googleCalendarUrl + sep
+        + 'ctz=Asia%2FTokyo&hl=ja&bgcolor=%23f7f4ef&color=%235a8f65'
+        + '&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0&mode=MONTH';
+      calWrap.innerHTML = `<iframe src="${src}" frameborder="0" scrolling="no" loading="lazy"></iframe>`;
+    } else {
+      calWrap.innerHTML = `
+        <div class="calendar-placeholder">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <path d="M16 2v4M8 2v4M3 10h18"/>
+            <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
+          </svg>
+          <p>
+            <strong>Googleカレンダーを連携しましょう！</strong><br><br>
+            ① Googleカレンダーで使いたいカレンダーの<br>
+            　「︙」→「設定と共有」を開く<br>
+            ② 「一般公開して誰でも利用できるようにする」にチェック<br>
+            ③ 「カレンダーを埋め込む」→「コードをコピー」<br>
+            ④ コードの中の <code>src="..."</code> のURLをコピーして<br>
+            　このファイル上部の<br>
+            　<code>googleCalendarUrl: ""</code> に貼り付けて保存
+          </p>
+        </div>`;
+    }
+
+    // SNS
+    const snsEl = document.getElementById('sns-links');
+    if (CONFIG.sns.instagram) snsEl.innerHTML += `<a href="${CONFIG.sns.instagram}" target="_blank">Instagram</a>`;
+    if (CONFIG.sns.twitter)   snsEl.innerHTML += `<a href="${CONFIG.sns.twitter}"   target="_blank">X (Twitter)</a>`;
+    if (CONFIG.sns.line)      snsEl.innerHTML += `<a href="${CONFIG.sns.line}"      target="_blank">LINE</a>`;
+
+    // Footer
+    const year = new Date().getFullYear();
+    document.getElementById('footer-copy').textContent = `© ${year} ${CONFIG.name}. All rights reserved.`;
+
+  })();
+</script>
+
+</body>
+</html>
