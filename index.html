@@ -38,16 +38,17 @@
       ], // ← 自己紹介文。行を増やしたい場合は "文章", を追加してください
 
       /* ── ギャラリー（写真） ── */
-      // src: に写真ファイルのパスを入れてください（例: "photos/photo1.jpg"）
-      // caption: に写真の説明を入れてください
+      // src:     サムネイル写真のパス（例: "photos/family1.jpg"）
+      // caption: 写真の説明
+      // cat:     カテゴリID（gallery.htmlと対応させてください）
       gallery: [
-        { src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80", caption: "家族フォト" },
-        { src: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80", caption: "七五三" },
-        { src: "https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=80", caption: "誕生日" },
-        { src: "https://images.unsplash.com/photo-1476703993599-0035a21b089a?w=600&q=80", caption: "お宮参り" },
-        { src: "https://images.unsplash.com/photo-1544126592-807ade215a0b?w=600&q=80", caption: "お食い初め" },
-        { src: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&q=80", caption: "カップルフォト" },
-        { src: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80", caption: "プロフィール撮影" },
+        { src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80", caption: "家族フォト",     cat: "family" },
+        { src: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80", caption: "七五三",         cat: "shichigosan" },
+        { src: "https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=80", caption: "誕生日",         cat: "birthday" },
+        { src: "https://images.unsplash.com/photo-1476703993599-0035a21b089a?w=600&q=80", caption: "お宮参り",       cat: "omiyamairi" },
+        { src: "https://images.unsplash.com/photo-1544126592-807ade215a0b?w=600&q=80", caption: "お食い初め",     cat: "okuizome" },
+        { src: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&q=80", caption: "カップルフォト", cat: "couple" },
+        { src: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80", caption: "プロフィール撮影", cat: "profile" },
       ],
 
       /* ── 料金プラン ── */
@@ -299,6 +300,9 @@
       position: relative;
       overflow: hidden;
       border-radius: 6px;
+      cursor: pointer;
+      display: block;
+      text-decoration: none;
     }
     #gallery .gallery-item img { transition: transform .5s ease; }
     #gallery .gallery-item:hover img { transform: scale(1.05); }
@@ -741,14 +745,15 @@
       }, 4000); // 4秒ごとに切り替え（変えたい場合はこの数値を変更）
     })();
 
-    // Gallery
+    // Gallery（クリックでカテゴリページへ）
     const galleryEl = document.getElementById('gallery-grid');
     CONFIG.gallery.forEach(item => {
+      const link = item.cat ? `gallery.html?cat=${item.cat}` : '#gallery';
       galleryEl.innerHTML += `
-        <div class="gallery-item">
+        <a class="gallery-item" href="${link}">
           <img src="${item.src}" alt="${item.caption}" loading="lazy" />
           <div class="gallery-caption">${item.caption}</div>
-        </div>`;
+        </a>`;
     });
 
     // Plans

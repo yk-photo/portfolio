@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery — YK Photo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet" />
+
+  <!-- ============================================================
+       🌿 ギャラリー設定ゾーン — ここだけ書き換えればOK！
+       ============================================================
+       各カテゴリに写真を追加するには：
+       photos の配列に { src: "ファイルパス", caption: "説明" } を追加してください
+       ============================================================ -->
+  <script id="config">
+    const GALLERY_CONFIG = {
+
+      siteName: "YK Photo",  // ← サイト名（portfolio.htmlと合わせてください）
+
+      categories: {
+
+        family: {
+          label: "家族フォト",
+          description: "大切な家族の時間を自然体で切り取ります。",
+          photos: [
+            { src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80", caption: "家族写真" },
+            { src: "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=800&q=80", caption: "公園でのひとコマ" },
+            { src: "https://images.unsplash.com/photo-1476703993599-0035a21b089a?w=800&q=80", caption: "家族の笑顔" },
+            { src: "https://images.unsplash.com/photo-1543342384-1f1350e27861?w=800&q=80", caption: "お散歩" },
+          ],
+        },
+
+        shichigosan: {
+          label: "七五三",
+          description: "お子さまの成長の節目を美しい一枚に。",
+          photos: [
+            { src: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=800&q=80", caption: "七五三" },
+            { src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=80", caption: "晴れ着姿" },
+            { src: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=800&q=80", caption: "神社にて" },
+          ],
+        },
+
+        birthday: {
+          label: "誕生日",
+          description: "特別な誕生日の瞬間を記念に残しましょう。",
+          photos: [
+            { src: "https://images.unsplash.com/photo-1586105251261-72a756497a11?w=800&q=80", caption: "誕生日" },
+            { src: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=800&q=80", caption: "ケーキと一緒に" },
+            { src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", caption: "バルーンフォト" },
+          ],
+        },
+
+        omiyamairi: {
+          label: "お宮参り",
+          description: "赤ちゃんの初めての晴れの日を丁寧に撮影します。",
+          photos: [
+            { src: "https://images.unsplash.com/photo-1476703993599-0035a21b089a?w=800&q=80", caption: "お宮参り" },
+            { src: "https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=800&q=80", caption: "家族揃って" },
+            { src: "https://images.unsplash.com/photo-1519689680058-324335c77eba?w=800&q=80", caption: "祝い着" },
+          ],
+        },
+
+        okuizome: {
+          label: "お食い初め",
+          description: "一生食べ物に困らないようにとの願いを込めた儀式を記念撮影。",
+          photos: [
+            { src: "https://images.unsplash.com/photo-1544126592-807ade215a0b?w=800&q=80", caption: "お食い初め" },
+            { src: "https://images.unsplash.com/photo-1519689373023-dd07c7988603?w=800&q=80", caption: "100日記念" },
+            { src: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=800&q=80", caption: "家族の笑顔" },
+          ],
+        },
+
+        couple: {
+          label: "カップルフォト",
+          description: "ふたりの特別な時間を自然な雰囲気で撮影します。",
+          photos: [
+            { src: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800&q=80", caption: "カップルフォト" },
+            { src: "https://images.unsplash.com/photo-1529634597503-139d3726fed5?w=800&q=80", caption: "公園デート" },
+            { src: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&q=80", caption: "ロケーション撮影" },
+          ],
+        },
+
+        profile: {
+          label: "プロフィール撮影",
+          description: "就活・SNS・ビジネス用など、あなたらしい一枚を。",
+          photos: [
+            { src: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=80", caption: "プロフィール" },
+            { src: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=80", caption: "ビジネスポートレート" },
+            { src: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&q=80", caption: "ナチュラルポートレート" },
+          ],
+        },
+
+      },
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream:  #f7f4ef;
+      --beige:  #eae6da;
+      --sand:   #c8d5c4;
+      --dark:   #2d4a38;
+      --accent: #5a8f65;
+      --brown:  #6b8f71;
+      --text:   #3a4f3d;
+      --font-serif: 'Noto Serif JP', serif;
+      --font-sans:  'Noto Sans JP', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); background: var(--cream); color: var(--text); }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── ナビ ── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(247,244,239,.92);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--sand);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 60px;
+    }
+    #nav .logo {
+      font-family: var(--font-serif);
+      font-size: 1.2rem; color: var(--dark); letter-spacing: .1em;
+      text-decoration: none;
+    }
+    #nav .back-btn {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .85rem; color: var(--brown); letter-spacing: .06em;
+      text-decoration: none; transition: color .2s;
+    }
+    #nav .back-btn:hover { color: var(--dark); }
+
+    /* ── ヒーロー ── */
+    #hero {
+      margin-top: 60px;
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+      background: linear-gradient(160deg, #e8eee5 0%, var(--cream) 60%);
+    }
+    #hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300; color: var(--dark);
+      letter-spacing: .12em; margin-bottom: .8rem;
+    }
+    #hero p { font-size: .95rem; color: var(--brown); letter-spacing: .05em; }
+
+    /* ── カテゴリタブ ── */
+    #cat-tabs {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: .6rem; padding: 2rem 1rem 0;
+      max-width: 900px; margin: 0 auto;
+    }
+    .cat-tab {
+      padding: .45rem 1.2rem;
+      border: 1px solid var(--sand);
+      border-radius: 99px;
+      font-size: .82rem; letter-spacing: .08em;
+      color: var(--brown); background: #fff;
+      cursor: pointer; transition: all .2s;
+      text-decoration: none;
+    }
+    .cat-tab:hover { border-color: var(--accent); color: var(--accent); }
+    .cat-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* ── ギャラリーグリッド ── */
+    #gallery-section { padding: 3rem 2rem 6rem; }
+    .gallery-inner { max-width: 1000px; margin: 0 auto; }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 220px;
+      gap: 10px;
+    }
+    .photo-grid .photo-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+    .photo-item {
+      position: relative; overflow: hidden; border-radius: 6px; cursor: pointer;
+    }
+    .photo-item img { transition: transform .5s ease; }
+    .photo-item:hover img { transform: scale(1.05); }
+    .photo-cap {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(45,74,56,.65));
+      color: #fff; font-size: .8rem; letter-spacing: .08em;
+      padding: .7rem .9rem; opacity: 0; transition: opacity .3s;
+    }
+    .photo-item:hover .photo-cap { opacity: 1; }
+
+    /* ── ライトボックス ── */
+    #lightbox {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,.88);
+      align-items: center; justify-content: center;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img {
+      max-width: 90vw; max-height: 88vh;
+      width: auto; height: auto;
+      border-radius: 4px;
+      object-fit: contain;
+    }
+    #lightbox .lb-close {
+      position: absolute; top: 1.2rem; right: 1.5rem;
+      color: #fff; font-size: 2rem; cursor: pointer;
+      line-height: 1; opacity: .8; transition: opacity .2s;
+    }
+    #lightbox .lb-close:hover { opacity: 1; }
+    #lightbox .lb-prev,
+    #lightbox .lb-next {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      color: #fff; font-size: 2.2rem; cursor: pointer;
+      opacity: .7; transition: opacity .2s; user-select: none;
+    }
+    #lightbox .lb-prev { left: 1.5rem; }
+    #lightbox .lb-next { right: 1.5rem; }
+    #lightbox .lb-prev:hover,
+    #lightbox .lb-next:hover { opacity: 1; }
+
+    /* ── フッター ── */
+    footer {
+      background: #1e3328; color: rgba(255,255,255,.6);
+      text-align: center; padding: 2rem 1rem;
+      font-size: .82rem; letter-spacing: .06em;
+    }
+
+    @media (max-width: 640px) {
+      .photo-grid { grid-template-columns: repeat(2,1fr); grid-auto-rows: 160px; }
+      .photo-grid .photo-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ナビ -->
+<nav id="nav">
+  <a href="index.html" class="logo" id="nav-logo"></a>
+  <a href="index.html#gallery" class="back-btn">
+    ← Galleryに戻る
+  </a>
+</nav>
+
+<!-- ヒーロー -->
+<div id="hero">
+  <h1 id="cat-title">Gallery</h1>
+  <p id="cat-desc"></p>
+</div>
+
+<!-- カテゴリタブ -->
+<div id="cat-tabs"></div>
+
+<!-- ギャラリー -->
+<section id="gallery-section">
+  <div class="gallery-inner">
+    <div class="photo-grid" id="photo-grid"></div>
+  </div>
+</section>
+
+<!-- フッター -->
+<footer id="footer"></footer>
+
+<!-- ライトボックス -->
+<div id="lightbox">
+  <span class="lb-close" id="lb-close">&times;</span>
+  <span class="lb-prev" id="lb-prev">&#8249;</span>
+  <img id="lb-img" src="" alt="" />
+  <span class="lb-next" id="lb-next">&#8250;</span>
+</div>
+
+<script>
+  (function () {
+    // URLからカテゴリを取得
+    const params  = new URLSearchParams(location.search);
+    const catKey  = params.get('cat') || Object.keys(GALLERY_CONFIG.categories)[0];
+    const cats    = GALLERY_CONFIG.categories;
+    const current = cats[catKey] || cats[Object.keys(cats)[0]];
+
+    // ナビロゴ
+    document.getElementById('nav-logo').textContent = GALLERY_CONFIG.siteName;
+
+    // タイトル・説明
+    document.getElementById('cat-title').textContent = current.label;
+    document.getElementById('cat-desc').textContent  = current.description;
+
+    // カテゴリタブ
+    const tabsEl = document.getElementById('cat-tabs');
+    Object.entries(cats).forEach(([key, cat]) => {
+      const a = document.createElement('a');
+      a.className = 'cat-tab' + (key === catKey ? ' active' : '');
+      a.href      = `gallery.html?cat=${key}`;
+      a.textContent = cat.label;
+      tabsEl.appendChild(a);
+    });
+
+    // 写真グリッド
+    const gridEl  = document.getElementById('photo-grid');
+    const photos  = current.photos;
+    photos.forEach((photo, i) => {
+      const div = document.createElement('div');
+      div.className = 'photo-item';
+      div.innerHTML = `<img src="${photo.src}" alt="${photo.caption}" loading="lazy" /><div class="photo-cap">${photo.caption}</div>`;
+      div.addEventListener('click', () => openLightbox(i));
+      gridEl.appendChild(div);
+    });
+
+    // フッター
+    document.getElementById('footer').textContent =
+      `© ${new Date().getFullYear()} ${GALLERY_CONFIG.siteName}. All rights reserved.`;
+
+    // ── ライトボックス ──
+    let currentIndex = 0;
+    const lb     = document.getElementById('lightbox');
+    const lbImg  = document.getElementById('lb-img');
+
+    function openLightbox(index) {
+      currentIndex = index;
+      lbImg.src = photos[index].src;
+      lbImg.alt = photos[index].caption;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function prevPhoto() {
+      currentIndex = (currentIndex - 1 + photos.length) % photos.length;
+      lbImg.src = photos[currentIndex].src;
+    }
+    function nextPhoto() {
+      currentIndex = (currentIndex + 1) % photos.length;
+      lbImg.src = photos[currentIndex].src;
+    }
+
+    document.getElementById('lb-close').addEventListener('click', closeLightbox);
+    document.getElementById('lb-prev').addEventListener('click', prevPhoto);
+    document.getElementById('lb-next').addEventListener('click', nextPhoto);
+    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'ArrowLeft')  prevPhoto();
+      if (e.key === 'ArrowRight') nextPhoto();
+      if (e.key === 'Escape')     closeLightbox();
+    });
+  })();
+</script>
+
+</body>
+</html>
